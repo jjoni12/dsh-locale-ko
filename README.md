@@ -7,11 +7,17 @@
 DeepSeek Harness의 화면(채팅, 사이드바, 설정, 플러그인, 자동화 작업, 파일 미리보기, 대화상자 등)을 한국어로 바꿔 주는 플러그인입니다.
 앱 프로그램 파일은 건드리지 않고, DSH 사용자 프로필에 플러그인으로만 설치되기 때문에 언제든 깨끗하게 제거할 수 있습니다.
 
+## 기준 앱
+
+이 언어팩은 DeepSeek의 [DeepSeek Harness 공식 페이지](https://www.deepseek.com/en/harness/)에서 배포하는 **공식 데스크톱 앱**(Download for Windows)을 기준으로 만들었습니다. 같은 페이지에서 안내하는 `npx @deepseek-ai/dsh web`(Web UI)에서도 동작합니다.
+
+이 프로젝트는 비공식 커뮤니티 번역이며, DeepSeek가 만들거나 보증한 것이 아닙니다.
+
 ## 지원 버전
 
 | 앱 | 버전 | 방식 |
 |---|---|---|
-| DeepSeek Harness 공식 데스크톱 앱 | 0.2.1-rc.2 | DSH 공식 언어팩 API(`addLanguage`) |
+| [DeepSeek Harness 공식 데스크톱 앱](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 | DSH 공식 언어팩 API(`addLanguage`) |
 | `dsh web` (명령줄) | 0.2.1-rc.2 | DSH 공식 언어팩 API(`addLanguage`) |
 | DSH Desktop (Microsoft Store 커뮤니티판) | 0.2.15 (harness 0.1.1-rc.2) | 번역 런타임 확장 (0.1.x에는 언어팩 API가 없음) |
 
