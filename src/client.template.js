@@ -7,36 +7,18 @@ window.__ModuleLoader__.load({
 		/** Korean dictionaries keyed like the shipped ones: namespace -> key -> text. */
 		const KO = /*__KO_DICT__*/{};
 		/**
-		 * English UI text that bypasses the locale registry, as exact text -> Korean, in three scopes:
+		 * English UI text that bypasses the locale registry, as exact text -> Korean, in two scopes:
 		 * `global` sentences apply anywhere outside conversation content; `plugins` (package titles and
-		 * descriptions) apply only inside plugin screens; `legacy` labels apply only on DSH 0.1.x, where
-		 * the registry did not cover them — on 0.2+ the same short words could be a user's file or
-		 * session name, so they must never be rewritten there.
+		 * descriptions) apply only inside plugin screens, because the same short phrases could be a
+		 * user's file or session name elsewhere.
 		 */
 		const STATIC = /*__KO_STATIC__*/{};
 		const STATIC_GLOBAL = STATIC.global ?? {};
 		const STATIC_PLUGINS = STATIC.plugins ?? {};
-		const STATIC_LEGACY = STATIC.legacy ?? {};
 		const PLUGIN_SCOPE = "[data-plugin-panel], [data-plugin-scope], [data-plugin-package], [data-plugin-entry]";
-		let legacyStatic = false;
 
 		const DEBUG = /*__DEBUG__*/false;
 		const KO_ID = "ko";
-		const OPT_OUT_KEY = "dsh-locale-ko:other";
-
-		function readOptOut() {
-			try {
-				return window.localStorage.getItem(OPT_OUT_KEY);
-			} catch {
-				return null;
-			}
-		}
-		function writeOptOut(value) {
-			try {
-				if (value) window.localStorage.setItem(OPT_OUT_KEY, value);
-				else window.localStorage.removeItem(OPT_OUT_KEY);
-			} catch {}
-		}
 
 		// ── hardcoded-text fallback ───────────────────────────────────────────
 		const ATTRS = ["placeholder", "title", "aria-label"];
@@ -57,7 +39,6 @@ window.__ModuleLoader__.load({
 			const trimmed = value.trim();
 			if (!trimmed) return undefined;
 			let hit = STATIC_GLOBAL[trimmed];
-			if (hit === undefined && legacyStatic) hit = STATIC_LEGACY[trimmed];
 			if (hit === undefined && STATIC_PLUGINS[trimmed] !== undefined && el.closest(PLUGIN_SCOPE)) hit = STATIC_PLUGINS[trimmed];
 			if (hit === undefined) return undefined;
 			return value.replace(trimmed, hit);
@@ -140,8 +121,22 @@ window.__ModuleLoader__.load({
 		// ── locale registry integration ───────────────────────────────────────
 		const inject = ["locale"];
 
-		/** Follow the active locale: the hardcoded-text fallback runs only while Korean is on screen. */
-		function followActiveLocale(ctx, locale) {
+		/**
+		 * The locale service accepts external language packs (DSH 0.2+), so Korean is an ordinary
+		 * selectable language whose preference DSH persists itself. The hardcoded-text fallback runs
+		 * only while Korean is on screen.
+		 */
+		function apply(ctx) {
+			const locale = ctx.locale;
+			if (DEBUG) window.__KO_LOCALE__ = locale;
+			if (typeof locale.addLanguage !== "function") {
+				console.warn("dsh-plugin-locale-ko: this DSH build has no language-pack API (needs DeepSeek Harness 0.2 or later); Korean is not available.");
+				return;
+			}
+			ctx.effect(() => locale.addLanguage({ id: KO_ID, label: "한국어", fallback: "en" }), "locale-ko: language");
+			for (const [ns, dict] of Object.entries(KO)) {
+				ctx.effect(() => locale.register(ns, KO_ID, dict), `locale-ko: ${ns} dictionary`);
+			}
 			const sync = (snapshot) => {
 				if (snapshot.active === KO_ID) startStatic();
 				else stopStatic();
@@ -149,83 +144,6 @@ window.__ModuleLoader__.load({
 			ctx.on("locale/change", sync);
 			sync(locale.getLocale());
 			ctx.effect(() => stopStatic, "locale-ko: hardcoded-text fallback");
-		}
-
-		/**
-		 * DSH 0.2+: the locale service accepts external language packs, so Korean is an ordinary
-		 * selectable language whose preference DSH persists itself.
-		 */
-		function applyOfficial(ctx, locale) {
-			ctx.effect(() => locale.addLanguage({ id: KO_ID, label: "한국어", fallback: "en" }), "locale-ko: language");
-			for (const [ns, dict] of Object.entries(KO)) {
-				ctx.effect(() => locale.register(ns, KO_ID, dict), `locale-ko: ${ns} dictionary`);
-			}
-			followActiveLocale(ctx, locale);
-		}
-
-		function apply(ctx) {
-			const locale = ctx.locale;
-			if (DEBUG) window.__KO_LOCALE__ = locale;
-			if (typeof locale.addLanguage === "function") return applyOfficial(ctx, locale);
-			applyLegacy(ctx, locale);
-		}
-
-		/**
-		 * DSH 0.1.x shipped only zh/en with no extension point, so Korean is spliced into the
-		 * runtime's lookup and snapshot, with the choice kept in browser storage.
-		 */
-		function applyLegacy(ctx, locale) {
-			legacyStatic = true;
-			const originalLookup = locale.lookup;
-			const originalPublish = locale.publish;
-			const originalSetLocale = locale.setLocale;
-			const originalLocales = locale.snapshot.locales;
-
-			locale.lookup = function (ns, key) {
-				if (this.snapshot.active === KO_ID) {
-					const hit = KO[ns]?.[key];
-					if (hit !== undefined) return hit;
-				}
-				return originalLookup.call(this, ns, key);
-			};
-			// Korean stands unless the user explicitly picked another shipped language here.
-			locale.publish = function (active, localeChanged) {
-				const target = readOptOut() ? active : KO_ID;
-				return originalPublish.call(this, target, localeChanged || target !== this.snapshot.active);
-			};
-			locale.setLocale = function (id) {
-				if (id === KO_ID) {
-					writeOptOut(null);
-					if (this.snapshot.active !== KO_ID) originalPublish.call(this, KO_ID, true);
-					return;
-				}
-				writeOptOut(id);
-				if (this.snapshot.active === id) originalPublish.call(this, id, true);
-				return originalSetLocale.call(this, id);
-			};
-
-			// 0.1.x maps only zh/en to a document tag, so set ours after its own listener runs.
-			ctx.on("locale/change", (snapshot) => {
-				if (snapshot.active === KO_ID) document.documentElement.lang = "ko";
-			});
-
-			locale.snapshot = Object.freeze({
-				...locale.snapshot,
-				locales: Object.freeze([{ id: KO_ID, label: "한국어" }, ...originalLocales])
-			});
-			const initial = readOptOut();
-			if (initial && originalLocales.some((l) => l.id === initial)) originalPublish.call(locale, initial, true);
-			else originalPublish.call(locale, KO_ID, true);
-			if (locale.getLocale().active === KO_ID) document.documentElement.lang = "ko";
-			followActiveLocale(ctx, locale);
-
-			ctx.effect(() => () => {
-				locale.lookup = originalLookup;
-				locale.publish = originalPublish;
-				locale.setLocale = originalSetLocale;
-				locale.snapshot = Object.freeze({ ...locale.snapshot, locales: originalLocales });
-				originalPublish.call(locale, locale.snapshot.active === KO_ID ? "en" : locale.snapshot.active, true);
-			}, "locale-ko: restore locale runtime");
 		}
 
 		exports.apply = apply;

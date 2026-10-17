@@ -2,10 +2,10 @@
 
 **DeepSeek Harness(DSH) 비공식 한국어 언어팩**
 
-> Unofficial Korean UI language pack for DeepSeek Harness (DSH), installed as a profile plugin. Not affiliated with DeepSeek or the DSH Desktop community publisher.
+> Unofficial Korean UI language pack for DeepSeek Harness (DSH), installed as a DSH plugin. Not affiliated with or endorsed by DeepSeek.
 
 DeepSeek Harness의 화면(채팅, 사이드바, 설정, 플러그인, 자동화 작업, 파일 미리보기, 대화상자 등)을 한국어로 바꿔 주는 플러그인입니다.
-앱 프로그램 파일은 건드리지 않고, DSH 사용자 프로필에 플러그인으로만 설치되기 때문에 언제든 깨끗하게 제거할 수 있습니다.
+앱 프로그램 파일은 건드리지 않고 DSH 플러그인으로만 설치되기 때문에, 플러그인 화면에서 언제든 끄거나 제거할 수 있습니다.
 
 ## 기준 앱
 
@@ -15,17 +15,16 @@ DeepSeek Harness의 화면(채팅, 사이드바, 설정, 플러그인, 자동화
 
 ## 지원 버전
 
-| 앱 | 버전 | 설치 방법 | 동작 방식 |
-|---|---|---|---|
-| [DeepSeek Harness 공식 데스크톱 앱](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 | 플러그인 화면에서 설치 | DSH 공식 언어팩 API(`addLanguage`) |
-| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 | 플러그인 화면에서 설치 | DSH 공식 언어팩 API(`addLanguage`) |
-| DSH Desktop (Microsoft Store 커뮤니티판) | 0.2.15 (harness 0.1.1-rc.2) | `install.mjs` | 번역 런타임 확장 (0.1.x에는 언어팩 API가 없음) |
+| 앱 | 버전 |
+|---|---|
+| [DeepSeek Harness 공식 데스크톱 앱](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 |
+| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 |
 
 다른 버전에서는 일부 문구가 영어로 나오거나 동작하지 않을 수 있습니다.
 
-## 설치 (DeepSeek Harness 0.2 이상)
+## 설치
 
-DSH 플러그인으로 설치합니다. Node.js나 터미널은 필요 없습니다.
+Node.js나 터미널은 필요 없습니다.
 
 1. DeepSeek Harness 왼쪽 사이드바에서 **플러그인**을 엽니다.
 2. 오른쪽 위 **플러그인 추가**를 누르고, 아래 주소를 입력한 뒤 **설치**를 누릅니다.
@@ -44,36 +43,7 @@ DSH 플러그인으로 설치합니다. Node.js나 터미널은 필요 없습니
 - **제거**: 한국어 언어팩을 눌러 상세 화면에서 **제거**를 누릅니다.
 - **업데이트**: 제거한 뒤 같은 주소로 다시 설치합니다.
 
-설치, 끄기, 제거는 모두 DSH 플러그인 관리자가 처리합니다. 언어팩이 사용자 설정 파일(`cordis.patch.yml`)을 직접 고치지 않습니다.
-
-## 설치 (Microsoft Store 커뮤니티판 DSH Desktop, 0.1.x)
-
-0.1.x에는 플러그인 화면이 없어서 설치 스크립트를 씁니다. [Node.js](https://nodejs.org/) 18 이상이 필요합니다.
-
-1. 이 저장소를 내려받습니다(`Code` → `Download ZIP` 후 압축 해제, 또는 `git clone`).
-2. 폴더 안에서 아래 명령을 실행한 뒤 DSH Desktop을 다시 실행합니다.
-
-```bash
-node install.mjs
-```
-
-제거:
-
-```bash
-node install.mjs --uninstall
-```
-
-- 설치할 때 프로필의 `package.json`과 `cordis.patch.yml`을 처음 한 번 `.bak-<시각>` 파일로 백업합니다.
-- 설치 스크립트는 언어팩이 넣은 줄만 지우고, 앱이나 사용자가 넣은 설정은 그대로 둡니다.
-- `cordis.patch.yml`에 `[ ... ]` 형식으로 항목을 적어 둔 경우에는 파일을 망가뜨리지 않도록 설치를 중단하고 직접 추가할 내용을 안내합니다.
-- 0.2 이상에서는 이 스크립트를 쓰지 마세요. 플러그인 화면으로 설치한 것과 겹치면 언어팩이 두 번 실행됩니다. (예전에 스크립트로 설치했다면 `node install.mjs "<프로필 폴더>" --uninstall`로 먼저 제거하세요.)
-
-## 번역 원칙
-
-- 제품명, 모델명, 기능명, 모드명, 등급명, 기술 용어는 원문 그대로 둡니다. 예: DeepSeek, Cordis, Standard·PTC·Minimal·Creator 모드, Plan 모드, Read Only, Workspace Write, Full access, Auto review, Agent Teams, Base URL, Context window, TTFT, Schema, Payload
-- 원문으로 둔 표현에 음역이나 뜻풀이를 덧붙이지 않습니다.
-- 일반적인 의미로 쓰인 단어는 문맥에 맞게 번역합니다.
-- 대화 본문(AI 답변, 사용자 메시지, 추론 내용, 코드 블록)은 번역하지 않습니다.
+설치, 끄기, 제거는 모두 DSH 앱의 **플러그인 화면**에서 처리되며, 언어팩은 **내 설정 파일**(`cordis.patch.yml`)을 직접 수정하지 않습니다.
 
 ## 구성
 
@@ -84,10 +54,9 @@ node install.mjs --uninstall
 | `lib/client.js` | 빌드된 언어팩 본체 |
 | `locale/*.json` | 플러그인 화면에 표시되는 이름과 설명 (영어·중국어·한국어) |
 | `icon.svg` | 플러그인 아이콘 |
-| `src/ko-dict.json` | 앱 번역 시스템에 등록된 문구의 한국어 번역 (0.2.1 기준 56개 네임스페이스, 2,566개 키 + 0.1.x 전용 키) |
-| `src/ko-static.json` | 번역 시스템을 거치지 않는 문구의 한국어 번역. `global`(어디서나), `plugins`(플러그인 화면 안에서만), `legacy`(0.1.x에서만) 세 묶음 |
+| `src/ko-dict.json` | 앱 번역 시스템에 등록된 문구의 한국어 번역 (0.2.1 기준 56개 네임스페이스, 2,566개 키) |
+| `src/ko-static.json` | 번역 시스템을 거치지 않는 문구의 한국어 번역. `global`(어디서나), `plugins`(플러그인 화면 안에서만) 두 묶음 |
 | `src/client.template.js`, `src/build.mjs` | 위 파일들로 `lib/client.js`를 만드는 템플릿과 빌드 스크립트 |
-| `install.mjs` | 0.1.x용 수동 설치/제거 스크립트 |
 
 ## 번역 수정하기
 
@@ -101,16 +70,15 @@ node src/build.mjs
 
 ## 동작 방식
 
-- **0.2 이상**: DSH가 제공하는 언어팩 API로 `ko` 언어(대체 언어 `en`)를 추가하고, 네임스페이스별 한국어 사전을 등록합니다. 언어 선택은 DSH가 직접 설정에 저장합니다.
-- **0.1.x**: 언어팩 API가 없어서 번역 런타임에 `ko`를 끼워 넣습니다. 언어 선택은 브라우저 저장소에 보관합니다.
+- DSH가 제공하는 언어팩 API로 `ko` 언어(대체 언어 `en`)를 추가하고, 네임스페이스별 한국어 사전을 등록합니다. 언어 선택은 DSH가 직접 설정에 저장합니다.
 - 번역 시스템을 거치지 않는 일부 문구는, 화면에 표시된 텍스트가 정확히 일치할 때만 한국어로 바꿉니다. 다른 언어로 바꾸면 즉시 원래 문구로 돌아갑니다.
   - 플러그인 이름·설명은 플러그인 화면 안에서만 바꿉니다.
-  - "Status", "Tools" 같은 짧은 단어는 0.1.x에서만 바꿉니다. 0.2 이상에서는 번역 시스템이 이미 처리하므로, 같은 이름의 파일·폴더·세션 제목이 잘못 바뀌지 않도록 건드리지 않습니다.
+  - "Status", "Tools" 같은 짧은 단어는 바꾸지 않습니다. 같은 이름의 파일·폴더·세션 제목이 잘못 바뀌지 않도록 하기 위해서입니다.
   - 대화 본문(AI 답변, 사용자 메시지, 추론 내용, 코드)은 바꾸지 않습니다.
 
 ## 한계
 
-- 앱 자체에 내장된 화면은 번역할 수 없습니다. 공식 데스크톱 앱의 창 메뉴(Application, Edit 등), Microsoft Store 커뮤니티판의 Controller 창이 여기에 해당합니다.
+- 앱 자체에 내장된 화면은 번역할 수 없습니다. 공식 데스크톱 앱의 창 메뉴(Application, Edit 등)가 여기에 해당합니다.
 - 설정 → 기본 제공 플러그인 목록의 패키지 설명은 각 패키지의 개발자용 설명이라 공식 중국어판에서도 영어로 나오며, 이 언어팩도 번역하지 않습니다.
 - 외부 플러그인과 서버에서 내려오는 일부 문구(도구 이름, 오류 원문 등)는 영어로 남을 수 있습니다.
 - 앱이 업데이트되면 새 문구가 영어로 나올 수 있습니다.
