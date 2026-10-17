@@ -1,18 +1,16 @@
-// Install (or remove with --uninstall) the Korean language pack into a DSH profile directory.
+// Manual installer for DSH builds without a plugin page (the 0.1.x Microsoft Store "DSH Desktop").
+// On DSH 0.2+, install from Plugins → Add plugin with this repository's address instead; using both
+// would mount the language pack twice.
 // Usage: node install.mjs [profileDir] [--uninstall]
 // Without profileDir, the first existing profile among PROFILE_CANDIDATES is used.
 import { readFileSync, writeFileSync, cpSync, rmSync, existsSync, copyFileSync } from "node:fs";
 import { join, dirname } from "node:path";
-import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
 
 const NAME = "dsh-plugin-locale-ko";
-const DSH_HOME = process.env.DSH_HOME || join(homedir(), ".dsh");
+// Only the 0.1.x Store build is found automatically; a DSH 0.2+ profile must be named explicitly
+// (e.g. to --uninstall an earlier manual install before switching to the plugin page).
 const PROFILE_CANDIDATES = [
-	// Official DeepSeek Harness desktop app (0.2+).
-	join(DSH_HOME, "profiles", "desktop"),
-	// `dsh web` from the command line.
-	join(DSH_HOME, "profiles", "web"),
 	// Community "DSH Desktop" from the Microsoft Store (0.1.x).
 	join(
 		process.env.LOCALAPPDATA ?? "",
@@ -107,9 +105,15 @@ if (uninstall) {
 	// A patch file must stay a YAML array; with no rows left, restore the shipped `[]`.
 	if (userRows.length === 0) patch = `${patch.trimEnd()}\n[]\n`;
 } else {
-	const src = join(here, NAME);
-	cpSync(src, join(profile, "local-plugins", NAME), { recursive: true });
-	cpSync(src, join(profile, "node_modules", NAME), { recursive: true });
+	// The repository root is the plugin package; copy only what it publishes.
+	const { files } = JSON.parse(readFileSync(join(here, "package.json"), "utf8"));
+	for (const dest of [join(profile, "local-plugins", NAME), join(profile, "node_modules", NAME)]) {
+		rmSync(dest, { recursive: true, force: true });
+		for (const entry of ["package.json", ...files]) {
+			const from = join(here, entry.replace(/\/$/, ""));
+			if (existsSync(from)) cpSync(from, join(dest, entry.replace(/\/$/, "")), { recursive: true });
+		}
+	}
 	pkg.dependencies[NAME] = `file:local-plugins/${NAME}`;
 	// The shipped file is a bare `[]`; turn it into a block list so our entry can sit beside the user's own rows.
 	patch = patch.replace(/^\[\]\s*$/m, "");

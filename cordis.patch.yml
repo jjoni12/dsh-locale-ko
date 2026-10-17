@@ -1,0 +1,4 @@
+# Bundle layer: selecting this bundle mounts the Korean language pack's client plugin.
+- insert:
+    - id: locale-ko
+      name: dsh-plugin-locale-ko

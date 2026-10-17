@@ -1,0 +1,41 @@
+{
+  "name": "dsh-plugin-locale-ko",
+  "version": "0.3.0",
+  "description": "Unofficial Korean UI language pack for DeepSeek Harness (DSH)",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./package.json": "./package.json",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json"
+  },
+  "icon": "./icon.svg",
+  "files": [
+    "lib/",
+    "locale/",
+    "icon.svg",
+    "cordis.patch.yml",
+    "LICENSE",
+    "NOTICE",
+    "README.md"
+  ],
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": ["@deepseek-ai/dsh-client-locale"],
+      "platform": "web",
+      "immediately": true
+    }
+  },
+  "keywords": ["dsh", "dsh-plugin", "deepseek-harness", "locale", "korean", "i18n"],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jjoni12/dsh-locale-ko.git"
+  },
+  "license": "MIT"
+}
