@@ -18,7 +18,7 @@ DeepSeek Harness의 화면(채팅, 사이드바, 설정, 플러그인, 자동화
 
 ![설정 → 일반 화면](docs/settings.png)
 
-![플러그인 화면에 설치된 한국어 언어팩](docs/plugins.png)
+![플러그인 화면의 한국어 언어팩 상세 정보](docs/plugins.png)
 
 </details>
 
