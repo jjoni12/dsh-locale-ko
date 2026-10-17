@@ -123,9 +123,41 @@ window.__ModuleLoader__.load({
 		// ── locale registry integration ───────────────────────────────────────
 		const inject = ["locale"];
 
+		/** Follow the active locale: the hardcoded-text fallback runs only while Korean is on screen. */
+		function followActiveLocale(ctx, locale) {
+			const sync = (snapshot) => {
+				if (snapshot.active === KO_ID) startStatic();
+				else stopStatic();
+			};
+			ctx.on("locale/change", sync);
+			sync(locale.getLocale());
+			ctx.effect(() => stopStatic, "locale-ko: hardcoded-text fallback");
+		}
+
+		/**
+		 * DSH 0.2+: the locale service accepts external language packs, so Korean is an ordinary
+		 * selectable language whose preference DSH persists itself.
+		 */
+		function applyOfficial(ctx, locale) {
+			ctx.effect(() => locale.addLanguage({ id: KO_ID, label: "한국어", fallback: "en" }), "locale-ko: language");
+			for (const [ns, dict] of Object.entries(KO)) {
+				ctx.effect(() => locale.register(ns, KO_ID, dict), `locale-ko: ${ns} dictionary`);
+			}
+			followActiveLocale(ctx, locale);
+		}
+
 		function apply(ctx) {
 			const locale = ctx.locale;
 			if (DEBUG) window.__KO_LOCALE__ = locale;
+			if (typeof locale.addLanguage === "function") return applyOfficial(ctx, locale);
+			applyLegacy(ctx, locale);
+		}
+
+		/**
+		 * DSH 0.1.x shipped only zh/en with no extension point, so Korean is spliced into the
+		 * runtime's lookup and snapshot, with the choice kept in browser storage.
+		 */
+		function applyLegacy(ctx, locale) {
 			const originalLookup = locale.lookup;
 			const originalPublish = locale.publish;
 			const originalSetLocale = locale.setLocale;
@@ -154,13 +186,10 @@ window.__ModuleLoader__.load({
 				return originalSetLocale.call(this, id);
 			};
 
-			const sync = (snapshot) => {
-				const isKo = snapshot.active === KO_ID;
-				if (isKo) document.documentElement.lang = "ko";
-				if (isKo) startStatic();
-				else stopStatic();
-			};
-			ctx.on("locale/change", sync);
+			// 0.1.x maps only zh/en to a document tag, so set ours after its own listener runs.
+			ctx.on("locale/change", (snapshot) => {
+				if (snapshot.active === KO_ID) document.documentElement.lang = "ko";
+			});
 
 			locale.snapshot = Object.freeze({
 				...locale.snapshot,
@@ -169,10 +198,10 @@ window.__ModuleLoader__.load({
 			const initial = readOptOut();
 			if (initial && originalLocales.some((l) => l.id === initial)) originalPublish.call(locale, initial, true);
 			else originalPublish.call(locale, KO_ID, true);
-			sync(locale.getLocale());
+			if (locale.getLocale().active === KO_ID) document.documentElement.lang = "ko";
+			followActiveLocale(ctx, locale);
 
 			ctx.effect(() => () => {
-				stopStatic();
 				locale.lookup = originalLookup;
 				locale.publish = originalPublish;
 				locale.setLocale = originalSetLocale;

@@ -1,6 +1,6 @@
 {
   "name": "dsh-plugin-locale-ko",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Unofficial Korean UI language pack for DeepSeek Harness (DSH)",
   "type": "module",
   "main": "lib/index.js",

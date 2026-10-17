@@ -1,27 +1,40 @@
 // Install (or remove with --uninstall) the Korean language pack into a DSH profile directory.
 // Usage: node install.mjs [profileDir] [--uninstall]
-// Without profileDir, the Microsoft Store DSH Desktop "web" profile is used.
+// Without profileDir, the first existing profile among PROFILE_CANDIDATES is used.
 import { readFileSync, writeFileSync, cpSync, rmSync, existsSync, copyFileSync } from "node:fs";
 import { join, dirname } from "node:path";
+import { homedir } from "node:os";
 import { fileURLToPath } from "node:url";
 
 const NAME = "dsh-plugin-locale-ko";
-const STORE_PROFILE = join(
-	process.env.LOCALAPPDATA ?? "",
-	"Packages",
-	"53660AlanM.DSHDesktopCommunity_909n0052ampem",
-	"LocalCache",
-	"Roaming",
-	"com.yeagoo.dsh-desktop",
-	"harness",
-	"profiles",
-	"web"
-);
+const DSH_HOME = process.env.DSH_HOME || join(homedir(), ".dsh");
+const PROFILE_CANDIDATES = [
+	// Official DeepSeek Harness desktop app (0.2+).
+	join(DSH_HOME, "profiles", "desktop"),
+	// `dsh web` from the command line.
+	join(DSH_HOME, "profiles", "web"),
+	// Community "DSH Desktop" from the Microsoft Store (0.1.x).
+	join(
+		process.env.LOCALAPPDATA ?? "",
+		"Packages",
+		"53660AlanM.DSHDesktopCommunity_909n0052ampem",
+		"LocalCache",
+		"Roaming",
+		"com.yeagoo.dsh-desktop",
+		"harness",
+		"profiles",
+		"web"
+	)
+];
 const here = dirname(fileURLToPath(import.meta.url));
 const uninstall = process.argv.includes("--uninstall");
-const profile = process.argv.slice(2).find((a) => !a.startsWith("--")) ?? STORE_PROFILE;
-if (!existsSync(join(profile, "package.json"))) {
-	console.error(`DSH profile not found: ${profile}\nRun DSH Desktop once first, or pass the profile directory explicitly.`);
+const explicit = process.argv.slice(2).find((a) => !a.startsWith("--"));
+const profile = explicit ?? PROFILE_CANDIDATES.find((dir) => existsSync(join(dir, "package.json")));
+if (!profile || !existsSync(join(profile, "package.json"))) {
+	console.error(
+		`DSH profile not found: ${profile ?? PROFILE_CANDIDATES.join(", ")}\n` +
+			"Run DeepSeek Harness once first, or pass the profile directory explicitly."
+	);
 	process.exit(1);
 }
 
