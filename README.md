@@ -1,11 +1,26 @@
 # dsh-locale-ko
 
-**DeepSeek Harness(DSH) 비공식 한국어 언어팩**
+**DeepSeek Harness(DSH) 비공식 한국어 언어팩** · 딥시크 하네스 한글 패치
 
-> Unofficial Korean UI language pack for DeepSeek Harness (DSH), installed as a DSH plugin. Not affiliated with or endorsed by DeepSeek.
+> **Korean (한국어) UI language pack for [DeepSeek Harness](https://www.deepseek.com/en/harness/).**
+> Install it from **Plugins → Add plugin** with `https://github.com/jjoni12/dsh-locale-ko`, then pick 한국어 in Settings → General → Language.
+> Unofficial community translation; not affiliated with or endorsed by DeepSeek.
 
 DeepSeek Harness의 화면(채팅, 사이드바, 설정, 플러그인, 자동화 작업, 파일 미리보기, 대화상자 등)을 한국어로 바꿔 주는 플러그인입니다.
 앱 프로그램 파일은 건드리지 않고 DSH 플러그인으로만 설치되기 때문에, 플러그인 화면에서 언제든 끄거나 제거할 수 있습니다.
+
+| 적용 전 | 적용 후 |
+|---|---|
+| ![적용 전: 영어 화면](docs/before-main.png) | ![적용 후: 한국어 화면](docs/after-main.png) |
+
+<details>
+<summary>스크린샷 더 보기 (설정, 플러그인 화면)</summary>
+
+![설정 → 일반 화면](docs/settings.png)
+
+![플러그인 화면에 설치된 한국어 언어팩](docs/plugins.png)
+
+</details>
 
 ## 기준 앱
 
