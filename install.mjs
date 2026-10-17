@@ -40,40 +40,72 @@ if (!profile || !existsSync(join(profile, "package.json"))) {
 
 const pkgPath = join(profile, "package.json");
 const patchPath = join(profile, "cordis.patch.yml");
-const BEGIN = "# >>> dsh-plugin-locale-ko";
-const END = "# <<< dsh-plugin-locale-ko";
+const MARKER = "# dsh-plugin-locale-ko (added by install.mjs)";
+// Markers written by earlier versions of this installer.
+const OLD_MARKERS = ["# >>> dsh-plugin-locale-ko", "# <<< dsh-plugin-locale-ko"];
+const ENTRY = ["- insert:", "    - id: locale-ko", `      name: ${NAME}`];
 let patch = existsSync(patchPath) ? readFileSync(patchPath, "utf8") : "[]\n";
 
-// Our block is appended as a YAML block-sequence item, which only parses when the user's own rows are
+/**
+ * Remove only this pack's own lines — its marker comments and its exact three-line insert entry —
+ * wherever they sit. DSH itself writes settings rows into this file (it appends them at the end,
+ * which can land right after our entry), so nothing else may ever be dropped.
+ */
+function stripOwnLines(text) {
+	const lines = text.split(/\r?\n/);
+	const out = [];
+	let found = false;
+	for (let i = 0; i < lines.length; i++) {
+		const line = lines[i];
+		if (line.trim() === MARKER || OLD_MARKERS.includes(line.trim())) {
+			found = true;
+			continue;
+		}
+		const isEntry =
+			line.trimEnd() === ENTRY[0] &&
+			lines[i + 1]?.trimEnd() === ENTRY[1] &&
+			lines[i + 2]?.trimEnd() === ENTRY[2] &&
+			!/^ {4}- /.test(lines[i + 3] ?? "");
+		if (isEntry) {
+			found = true;
+			i += 2;
+			continue;
+		}
+		out.push(line);
+	}
+	return { text: out.join("\n"), found };
+}
+
+const stripped = stripOwnLines(patch);
+
+// Our entry is appended as a YAML block-sequence item, which only parses when the user's own rows are
 // absent, a bare `[]`, or themselves block-sequence items. Refuse anything else rather than break the file.
-const userRows = patch
-	.replace(new RegExp(`${BEGIN}[\\s\\S]*?${END}`), "")
-	.split(/\r?\n/)
-	.filter((line) => line.trim() !== "" && !line.trimStart().startsWith("#"));
+const userRows = stripped.text.split("\n").filter((line) => line.trim() !== "" && !line.trimStart().startsWith("#"));
 if (!uninstall && userRows.length > 0 && !/^\[\]\s*$/.test(userRows[0]) && !userRows[0].startsWith("-")) {
 	console.error(
 		`${patchPath} uses a YAML layout this installer cannot extend safely.\n` +
 			"Nothing was changed. Rewrite its rows as a block list (lines starting with '- '), or add this row by hand:\n\n" +
-			`- insert:\n    - id: locale-ko\n      name: ${NAME}\n`
+			`${ENTRY.join("\n")}\n`
 	);
 	process.exit(1);
 }
 
 // Back up the user's files only before the first install, so the backup is always the original.
-if (!uninstall && !patch.includes(BEGIN)) {
+if (!uninstall && !stripped.found) {
 	const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 	for (const f of [pkgPath, patchPath]) if (existsSync(f)) copyFileSync(f, `${f}.bak-${stamp}`);
 }
 
 const pkg = JSON.parse(readFileSync(pkgPath, "utf8"));
 pkg.dependencies ??= {};
-patch = patch.replace(new RegExp(`\\n?${BEGIN}[\\s\\S]*?${END}\\n?`), "\n");
+patch = stripped.text;
 
 if (uninstall) {
 	delete pkg.dependencies[NAME];
 	rmSync(join(profile, "local-plugins", NAME), { recursive: true, force: true });
 	rmSync(join(profile, "node_modules", NAME), { recursive: true, force: true });
-	if (/^\s*(#.*\n|\s)*$/.test(patch)) patch += "[]\n";
+	// A patch file must stay a YAML array; with no rows left, restore the shipped `[]`.
+	if (userRows.length === 0) patch = `${patch.trimEnd()}\n[]\n`;
 } else {
 	const src = join(here, NAME);
 	cpSync(src, join(profile, "local-plugins", NAME), { recursive: true });
@@ -81,9 +113,9 @@ if (uninstall) {
 	pkg.dependencies[NAME] = `file:local-plugins/${NAME}`;
 	// The shipped file is a bare `[]`; turn it into a block list so our entry can sit beside the user's own rows.
 	patch = patch.replace(/^\[\]\s*$/m, "");
-	patch = `${patch.trimEnd()}\n${BEGIN}\n- insert:\n    - id: locale-ko\n      name: ${NAME}\n${END}\n`;
+	patch = `${patch.trimEnd()}\n${MARKER}\n${ENTRY.join("\n")}\n`;
 }
 writeFileSync(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`);
-writeFileSync(patchPath, patch.replace(/^\n+/, ""));
+writeFileSync(patchPath, `${patch.replace(/^\n+/, "").trimEnd()}\n`);
 console.log(uninstall ? "uninstalled" : "installed", "->", profile);
 console.log(readFileSync(patchPath, "utf8"));

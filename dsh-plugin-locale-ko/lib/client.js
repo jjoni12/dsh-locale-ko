@@ -2871,130 +2871,147 @@ window.__ModuleLoader__.load({
 				"terminalLimit": "터미널 수 한도에 도달했습니다. 쓰지 않는 터미널을 닫고 다시 시도하세요. 종료된 터미널도 한도에 포함됩니다."
 			}
 		};
-		/** Hardcoded English UI text that bypasses the locale registry: exact text -> Korean. */
+		/**
+		 * English UI text that bypasses the locale registry, as exact text -> Korean, in three scopes:
+		 * `global` sentences apply anywhere outside conversation content; `plugins` (package titles and
+		 * descriptions) apply only inside plugin screens; `legacy` labels apply only on DSH 0.1.x, where
+		 * the registry did not cover them — on 0.2+ the same short words could be a user's file or
+		 * session name, so they must never be rewritten there.
+		 */
 		const STATIC = {
-			"Think": "생각",
-			"Inspect": "검사",
-			"Session log": "세션 기록",
-			"Footnotes": "각주",
-			"Discover": "둘러보기",
-			"Task interface": "작업 화면",
-			"The Automation tasks page in the sidebar, plus task cards and reminder marks in sessions.": "사이드바의 자동화 작업 페이지와 세션 안의 작업 카드, 예약 알림 표시를 제공합니다.",
-			"Masks recognized keys, tokens, and passwords in sent messages.": "보낸 메시지에서 인식된 키, 토큰, 비밀번호를 가립니다.",
-			"Manage team members, member messages, and shared tasks.": "팀원, 팀원 메시지, 공유 작업을 관리합니다.",
-			"Enable team collaboration, team tools, the member roster, and the shared task board.": "팀 협업, 팀 도구, 팀원 명단, 공유 작업 보드를 사용합니다.",
-			"Speech transcription API": "음성 받아쓰기 API",
-			"Provide speech transcription for browser clients.": "브라우저 클라이언트에 음성 받아쓰기를 제공합니다.",
-			"Add an Auto review permission mode that uses the model to assess authorization before each tool call.": "도구를 호출하기 전마다 모델이 허용 여부를 판단하는 Auto review 권한 모드를 추가합니다.",
-			"Let agents add a “powered by dsh” badge to documents, pull requests, and other outputs.": "에이전트가 문서, 풀 리퀘스트 등 결과물에 “powered by dsh” 배지를 붙일 수 있게 합니다.",
-			"View team members and shared tasks, and navigate to member conversations.": "팀원과 공유 작업을 보고, 팀원 대화로 이동합니다.",
-			"Machine translation of reasoning": "추론 내용 기계 번역",
-			"Display expanded reasoning in another language using machine translation.": "펼친 추론 내용을 기계 번역으로 다른 언어로 보여 줍니다.",
-			"Voice recording": "음성 녹음",
-			"Record speech and insert editable text into the conversation draft.": "음성을 녹음해서 편집할 수 있는 텍스트로 대화 입력창에 넣습니다.",
-			"Machine translation of expanded reasoning; source text is sent to the selected service": "펼친 추론 내용을 기계 번역합니다. 원문은 선택한 서비스로 전송됩니다",
-			"Press Ctrl/Cmd+Shift+. to open Chrome DevTools in the bottom panel for development and debugging.": "Ctrl/Cmd+Shift+.를 누르면 아래쪽 패널에 Chrome DevTools가 열려 개발과 디버깅을 할 수 있습니다.",
-			"Inspect and debug raw session data, grouped chat messages, and the NodeJS backend.": "세션 원본 데이터, 묶인 채팅 메시지, NodeJS 백엔드를 검사하고 디버깅합니다.",
-			"Custom plugin markets": "사용자 지정 플러그인 마켓",
-			"Adds a Discover tab to Plugins for browsing and installing bundles from plugin market indexes you add": "플러그인에 둘러보기 탭을 추가해, 직접 추가한 플러그인 마켓 목록에서 번들을 찾아보고 설치할 수 있게 합니다",
-			"Run explicitly requested repeated work with fresh agents.": "명시적으로 요청한 반복 작업을 새 에이전트로 실행합니다.",
-			"Enable analysis of the current session's raw data and grouped chat messages in the session sidebar.": "세션 사이드바에서 현재 세션의 원본 데이터와 묶인 채팅 메시지를 분석할 수 있게 합니다.",
-			"Session search": "세션 검색",
-			"Give Agents tools to search and read earlier sessions from the current workspace.": "에이전트에게 현재 워크스페이스의 이전 세션을 검색하고 읽는 도구를 줍니다.",
-			"Conversation-following titles": "대화에 맞춰 바뀌는 제목",
-			"Refresh session titles as new human prompts arrive.": "사용자가 새 메시지를 보낼 때마다 세션 제목을 새로 고칩니다.",
-			"Speech recognition": "음성 인식",
-			"Manage speech transcription and select a recognition service.": "음성 받아쓰기를 관리하고 인식 서비스를 고릅니다.",
-			"Local SenseVoice recognition": "로컬 SenseVoice 인식",
-			"Transcribe recordings into text locally with SenseVoice.": "SenseVoice로 녹음을 이 컴퓨터에서 텍스트로 받아씁니다.",
-			"Persistent terminals": "지속 터미널",
-			"Keep shell processes alive across tool calls.": "도구 호출이 끝나도 셸 프로세스를 계속 유지합니다.",
-			"Give agents tools to coordinate members, exchange messages, and manage shared tasks.": "에이전트에게 팀원 조율, 메시지 주고받기, 공유 작업 관리 도구를 줍니다.",
-			"Let the agent create a new Git branch and worktree, then continue there.": "에이전트가 새 Git 브랜치와 worktree를 만들고 그곳에서 작업을 이어가게 합니다.",
-			"Voice input": "음성 입력",
-			"Transcribe recordings locally with SenseVoice; first use requires installing dependencies": "SenseVoice로 녹음을 이 컴퓨터에서 받아씁니다. 처음 쓸 때 의존성 설치가 필요합니다",
-			"Task scheduling": "작업 예약",
-			"Stores automation tasks, runs each in its original session when it is due, and gives the agent tools to manage them.": "자동화 작업을 저장하고, 예정 시각이 되면 원래 세션에서 실행하며, 에이전트에게 작업 관리 도구를 줍니다.",
-			"Provide the official powered-by-DSH badge skill.": "공식 powered-by-DSH 배지 스킬을 제공합니다.",
-			"Time awareness": "시간 인식",
-			"Tells the model the current time, the browser's time zone, and the time since the previous message at each step.": "단계마다 현재 시각, 브라우저 시간대, 이전 메시지 이후 지난 시간을 모델에 알려 줍니다.",
-			"Stopped because you signed out of DeepSeek.": "DeepSeek에서 로그아웃해서 중지되었습니다.",
-			"The DSH process exited before this turn finished.": "이 턴이 끝나기 전에 DSH 프로세스가 종료되었습니다.",
-			"Compact older conversation history": "이전 대화 기록 압축",
-			"record feedback about this session": "이 세션에 대한 피드백 기록",
-			"set or view the goal for a long-running task": "오래 걸리는 작업의 목표 설정 또는 확인",
-			"Enter or leave plan mode": "Plan 모드 켜기 또는 끄기",
-			"Switch the permission preset (sandbox mode + approval policy)": "권한 프리셋 전환 (샌드박스 모드 + 승인 정책)",
-			"Download this Session log as a ZIP archive": "이 세션 기록을 ZIP 파일로 다운로드",
-			"Write inside the workspace and permitted temporary directories; wider retries require approval.": "워크스페이스와 허용된 임시 디렉터리 안에서만 쓸 수 있으며, 범위를 넓혀 다시 시도하려면 승인이 필요합니다.",
-			"Full file access without approval prompts.": "승인 요청 없이 모든 파일에 접근합니다.",
-			"Current sandbox and approval settings do not match a preset.": "현재 샌드박스 및 승인 설정과 일치하는 프리셋이 없습니다.",
-			"Plan review": "계획 검토",
-			"Leave plan mode; the plan is carried out from the next step.": "Plan 모드를 끝내고 다음 단계부터 계획을 실행합니다.",
-			"Stay in plan mode; feedback goes back to the model.": "Plan 모드를 유지하고 피드백을 모델에 전달합니다.",
-			"System Prompt": "시스템 프롬프트",
-			"Tools": "도구",
-			"Summary": "요약",
-			"Options": "옵션",
-			"Usage": "사용량",
-			"Timing": "시간 정보",
-			"Not available": "사용할 수 없음",
-			"Started": "시작 시각",
-			"Total duration": "총 소요 시간",
-			"Generation": "생성",
-			"Throughput": "처리량",
-			"Tokens": "토큰",
-			"Reasoning": "추론",
-			"Content": "콘텐츠",
-			"Usage not reported": "사용량이 보고되지 않음",
-			"Input": "입력",
-			"Cached": "캐시됨",
-			"Cache created": "캐시 생성",
-			"Other": "기타",
-			"Output": "출력",
-			"This request": "이번 요청",
-			"Session cumulative": "세션 누적",
-			"Options not recorded": "옵션이 기록되지 않음",
-			"Request options JSON": "요청 옵션 JSON",
-			"Source not recorded": "소스가 기록되지 않음",
-			"Message source JSON": "메시지 소스 JSON",
-			"Raw Output": "원본 출력",
-			"Preview": "미리보기",
-			"Raw": "원본",
-			"Source": "소스",
-			"Result": "결과",
-			"(tool call only)": "(도구 호출만)",
-			"Open tool call summary": "도구 호출 요약 열기",
-			"Open image": "이미지 열기",
-			"No tools in this request": "이 요청에는 도구가 없습니다",
-			"Duration": "소요 시간",
-			"Timing source": "시간 정보 출처",
-			"Result JSON": "결과 JSON",
-			"Schema unavailable": "Schema를 사용할 수 없음",
-			"Parameters": "매개변수",
-			"Event details": "이벤트 세부 정보",
-			"Resize event details": "이벤트 세부 정보 크기 조절",
-			"Drag to resize. Double-click to reset.": "드래그해서 크기를 조절하세요. 두 번 클릭하면 초기화됩니다.",
-			"Close details": "세부 정보 닫기",
-			"Status": "상태",
-			"Purpose": "목적",
-			"Compaction": "압축",
-			"Provider": "제공업체",
-			"Model": "모델",
-			"Tool calls": "도구 호출",
-			"Subtool calls": "하위 도구 호출",
-			"Error": "오류",
-			"Retry": "재시도",
-			"Retry delay": "재시도 대기 시간",
-			"No system prompt in this request": "이 요청에는 시스템 프롬프트가 없습니다",
-			"Assistant Message": "어시스턴트 메시지",
-			"Tool Call": "도구 호출",
-			"Request Timing": "요청 시간 정보",
-			"Trajectory timeline": "실행 궤적 타임라인",
-			"No timing data": "시간 데이터 없음",
-			"Timeline overview; drag horizontally to focus events": "타임라인 개요. 가로로 드래그하면 이벤트를 확대해서 볼 수 있습니다",
-			"Message": "메시지"
+			"global": {
+				"The DSH process exited before this turn finished.": "이 턴이 끝나기 전에 DSH 프로세스가 종료되었습니다.",
+				"record feedback about this session": "이 세션에 대한 피드백 기록",
+				"set or view the goal for a long-running task": "오래 걸리는 작업의 목표 설정 또는 확인",
+				"Write inside the workspace and permitted temporary directories; wider retries require approval.": "워크스페이스와 허용된 임시 디렉터리 안에서만 쓸 수 있으며, 범위를 넓혀 다시 시도하려면 승인이 필요합니다.",
+				"Full file access without approval prompts.": "승인 요청 없이 모든 파일에 접근합니다.",
+				"Current sandbox and approval settings do not match a preset.": "현재 샌드박스 및 승인 설정과 일치하는 프리셋이 없습니다.",
+				"Leave plan mode; the plan is carried out from the next step.": "Plan 모드를 끝내고 다음 단계부터 계획을 실행합니다.",
+				"Stay in plan mode; feedback goes back to the model.": "Plan 모드를 유지하고 피드백을 모델에 전달합니다."
+			},
+			"plugins": {
+				"Discover": "둘러보기",
+				"Task interface": "작업 화면",
+				"The Automation tasks page in the sidebar, plus task cards and reminder marks in sessions.": "사이드바의 자동화 작업 페이지와 세션 안의 작업 카드, 예약 알림 표시를 제공합니다.",
+				"Masks recognized keys, tokens, and passwords in sent messages.": "보낸 메시지에서 인식된 키, 토큰, 비밀번호를 가립니다.",
+				"Manage team members, member messages, and shared tasks.": "팀원, 팀원 메시지, 공유 작업을 관리합니다.",
+				"Enable team collaboration, team tools, the member roster, and the shared task board.": "팀 협업, 팀 도구, 팀원 명단, 공유 작업 보드를 사용합니다.",
+				"Speech transcription API": "음성 받아쓰기 API",
+				"Provide speech transcription for browser clients.": "브라우저 클라이언트에 음성 받아쓰기를 제공합니다.",
+				"Add an Auto review permission mode that uses the model to assess authorization before each tool call.": "도구를 호출하기 전마다 모델이 허용 여부를 판단하는 Auto review 권한 모드를 추가합니다.",
+				"Let agents add a “powered by dsh” badge to documents, pull requests, and other outputs.": "에이전트가 문서, 풀 리퀘스트 등 결과물에 “powered by dsh” 배지를 붙일 수 있게 합니다.",
+				"View team members and shared tasks, and navigate to member conversations.": "팀원과 공유 작업을 보고, 팀원 대화로 이동합니다.",
+				"Machine translation of reasoning": "추론 내용 기계 번역",
+				"Display expanded reasoning in another language using machine translation.": "펼친 추론 내용을 기계 번역으로 다른 언어로 보여 줍니다.",
+				"Voice recording": "음성 녹음",
+				"Record speech and insert editable text into the conversation draft.": "음성을 녹음해서 편집할 수 있는 텍스트로 대화 입력창에 넣습니다.",
+				"Machine translation of expanded reasoning; source text is sent to the selected service": "펼친 추론 내용을 기계 번역합니다. 원문은 선택한 서비스로 전송됩니다",
+				"Press Ctrl/Cmd+Shift+. to open Chrome DevTools in the bottom panel for development and debugging.": "Ctrl/Cmd+Shift+.를 누르면 아래쪽 패널에 Chrome DevTools가 열려 개발과 디버깅을 할 수 있습니다.",
+				"Inspect and debug raw session data, grouped chat messages, and the NodeJS backend.": "세션 원본 데이터, 묶인 채팅 메시지, NodeJS 백엔드를 검사하고 디버깅합니다.",
+				"Custom plugin markets": "사용자 지정 플러그인 마켓",
+				"Adds a Discover tab to Plugins for browsing and installing bundles from plugin market indexes you add": "플러그인에 둘러보기 탭을 추가해, 직접 추가한 플러그인 마켓 목록에서 번들을 찾아보고 설치할 수 있게 합니다",
+				"Run explicitly requested repeated work with fresh agents.": "명시적으로 요청한 반복 작업을 새 에이전트로 실행합니다.",
+				"Enable analysis of the current session's raw data and grouped chat messages in the session sidebar.": "세션 사이드바에서 현재 세션의 원본 데이터와 묶인 채팅 메시지를 분석할 수 있게 합니다.",
+				"Session search": "세션 검색",
+				"Give Agents tools to search and read earlier sessions from the current workspace.": "에이전트에게 현재 워크스페이스의 이전 세션을 검색하고 읽는 도구를 줍니다.",
+				"Conversation-following titles": "대화에 맞춰 바뀌는 제목",
+				"Refresh session titles as new human prompts arrive.": "사용자가 새 메시지를 보낼 때마다 세션 제목을 새로 고칩니다.",
+				"Speech recognition": "음성 인식",
+				"Manage speech transcription and select a recognition service.": "음성 받아쓰기를 관리하고 인식 서비스를 고릅니다.",
+				"Local SenseVoice recognition": "로컬 SenseVoice 인식",
+				"Transcribe recordings into text locally with SenseVoice.": "SenseVoice로 녹음을 이 컴퓨터에서 텍스트로 받아씁니다.",
+				"Persistent terminals": "지속 터미널",
+				"Keep shell processes alive across tool calls.": "도구 호출이 끝나도 셸 프로세스를 계속 유지합니다.",
+				"Give agents tools to coordinate members, exchange messages, and manage shared tasks.": "에이전트에게 팀원 조율, 메시지 주고받기, 공유 작업 관리 도구를 줍니다.",
+				"Let the agent create a new Git branch and worktree, then continue there.": "에이전트가 새 Git 브랜치와 worktree를 만들고 그곳에서 작업을 이어가게 합니다.",
+				"Voice input": "음성 입력",
+				"Transcribe recordings locally with SenseVoice; first use requires installing dependencies": "SenseVoice로 녹음을 이 컴퓨터에서 받아씁니다. 처음 쓸 때 의존성 설치가 필요합니다",
+				"Task scheduling": "작업 예약",
+				"Stores automation tasks, runs each in its original session when it is due, and gives the agent tools to manage them.": "자동화 작업을 저장하고, 예정 시각이 되면 원래 세션에서 실행하며, 에이전트에게 작업 관리 도구를 줍니다.",
+				"Provide the official powered-by-DSH badge skill.": "공식 powered-by-DSH 배지 스킬을 제공합니다.",
+				"Time awareness": "시간 인식",
+				"Tells the model the current time, the browser's time zone, and the time since the previous message at each step.": "단계마다 현재 시각, 브라우저 시간대, 이전 메시지 이후 지난 시간을 모델에 알려 줍니다."
+			},
+			"legacy": {
+				"Think": "생각",
+				"Inspect": "검사",
+				"Session log": "세션 기록",
+				"Footnotes": "각주",
+				"Stopped because you signed out of DeepSeek.": "DeepSeek에서 로그아웃해서 중지되었습니다.",
+				"Compact older conversation history": "이전 대화 기록 압축",
+				"Enter or leave plan mode": "Plan 모드 켜기 또는 끄기",
+				"Switch the permission preset (sandbox mode + approval policy)": "권한 프리셋 전환 (샌드박스 모드 + 승인 정책)",
+				"Download this Session log as a ZIP archive": "이 세션 기록을 ZIP 파일로 다운로드",
+				"Plan review": "계획 검토",
+				"System Prompt": "시스템 프롬프트",
+				"Tools": "도구",
+				"Summary": "요약",
+				"Options": "옵션",
+				"Usage": "사용량",
+				"Timing": "시간 정보",
+				"Not available": "사용할 수 없음",
+				"Started": "시작 시각",
+				"Total duration": "총 소요 시간",
+				"Generation": "생성",
+				"Throughput": "처리량",
+				"Tokens": "토큰",
+				"Reasoning": "추론",
+				"Content": "콘텐츠",
+				"Usage not reported": "사용량이 보고되지 않음",
+				"Input": "입력",
+				"Cached": "캐시됨",
+				"Cache created": "캐시 생성",
+				"Other": "기타",
+				"Output": "출력",
+				"This request": "이번 요청",
+				"Session cumulative": "세션 누적",
+				"Options not recorded": "옵션이 기록되지 않음",
+				"Request options JSON": "요청 옵션 JSON",
+				"Source not recorded": "소스가 기록되지 않음",
+				"Message source JSON": "메시지 소스 JSON",
+				"Raw Output": "원본 출력",
+				"Preview": "미리보기",
+				"Raw": "원본",
+				"Source": "소스",
+				"Result": "결과",
+				"(tool call only)": "(도구 호출만)",
+				"Open tool call summary": "도구 호출 요약 열기",
+				"Open image": "이미지 열기",
+				"No tools in this request": "이 요청에는 도구가 없습니다",
+				"Duration": "소요 시간",
+				"Timing source": "시간 정보 출처",
+				"Result JSON": "결과 JSON",
+				"Schema unavailable": "Schema를 사용할 수 없음",
+				"Parameters": "매개변수",
+				"Event details": "이벤트 세부 정보",
+				"Resize event details": "이벤트 세부 정보 크기 조절",
+				"Drag to resize. Double-click to reset.": "드래그해서 크기를 조절하세요. 두 번 클릭하면 초기화됩니다.",
+				"Close details": "세부 정보 닫기",
+				"Status": "상태",
+				"Purpose": "목적",
+				"Compaction": "압축",
+				"Provider": "제공업체",
+				"Model": "모델",
+				"Tool calls": "도구 호출",
+				"Subtool calls": "하위 도구 호출",
+				"Error": "오류",
+				"Retry": "재시도",
+				"Retry delay": "재시도 대기 시간",
+				"No system prompt in this request": "이 요청에는 시스템 프롬프트가 없습니다",
+				"Assistant Message": "어시스턴트 메시지",
+				"Tool Call": "도구 호출",
+				"Request Timing": "요청 시간 정보",
+				"Trajectory timeline": "실행 궤적 타임라인",
+				"No timing data": "시간 데이터 없음",
+				"Timeline overview; drag horizontally to focus events": "타임라인 개요. 가로로 드래그하면 이벤트를 확대해서 볼 수 있습니다",
+				"Message": "메시지"
+			}
 		};
+		const STATIC_GLOBAL = STATIC.global ?? {};
+		const STATIC_PLUGINS = STATIC.plugins ?? {};
+		const STATIC_LEGACY = STATIC.legacy ?? {};
+		const PLUGIN_SCOPE = "[data-plugin-panel], [data-plugin-scope], [data-plugin-package], [data-plugin-entry]";
+		let legacyStatic = false;
 
 		const DEBUG = false;
 		const KO_ID = "ko";
@@ -3024,11 +3041,17 @@ window.__ModuleLoader__.load({
 		const touched = new Map();
 		const PRUNE_AT = 4000;
 
-		function translateText(value) {
+		/**
+		 * @param value - text node value or attribute value.
+		 * @param el - the element showing it (text node parent, or the attribute's owner).
+		 */
+		function translateText(value, el) {
 			if (!value) return undefined;
 			const trimmed = value.trim();
 			if (!trimmed) return undefined;
-			const hit = STATIC[trimmed];
+			let hit = STATIC_GLOBAL[trimmed];
+			if (hit === undefined && legacyStatic) hit = STATIC_LEGACY[trimmed];
+			if (hit === undefined && STATIC_PLUGINS[trimmed] !== undefined && el.closest(PLUGIN_SCOPE)) hit = STATIC_PLUGINS[trimmed];
 			if (hit === undefined) return undefined;
 			return value.replace(trimmed, hit);
 		}
@@ -3048,7 +3071,7 @@ window.__ModuleLoader__.load({
 			const parent = node.parentElement;
 			if (!parent || inSkipped(parent)) return;
 			const current = node.nodeValue;
-			const next = translateText(current);
+			const next = translateText(current, parent);
 			if (next === undefined || next === current) return;
 			remember(node, "#text", current, next);
 			node.nodeValue = next;
@@ -3056,7 +3079,7 @@ window.__ModuleLoader__.load({
 		function patchAttrs(el) {
 			for (const attr of ATTRS) {
 				const current = el.getAttribute(attr);
-				const next = translateText(current);
+				const next = translateText(current, el);
 				if (next === undefined || next === current) continue;
 				remember(el, attr, current, next);
 				el.setAttribute(attr, next);
@@ -3145,6 +3168,7 @@ window.__ModuleLoader__.load({
 		 * runtime's lookup and snapshot, with the choice kept in browser storage.
 		 */
 		function applyLegacy(ctx, locale) {
+			legacyStatic = true;
 			const originalLookup = locale.lookup;
 			const originalPublish = locale.publish;
 			const originalSetLocale = locale.setLocale;

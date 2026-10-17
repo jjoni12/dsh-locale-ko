@@ -6,8 +6,19 @@ window.__ModuleLoader__.load({
 
 		/** Korean dictionaries keyed like the shipped ones: namespace -> key -> text. */
 		const KO = /*__KO_DICT__*/{};
-		/** Hardcoded English UI text that bypasses the locale registry: exact text -> Korean. */
+		/**
+		 * English UI text that bypasses the locale registry, as exact text -> Korean, in three scopes:
+		 * `global` sentences apply anywhere outside conversation content; `plugins` (package titles and
+		 * descriptions) apply only inside plugin screens; `legacy` labels apply only on DSH 0.1.x, where
+		 * the registry did not cover them — on 0.2+ the same short words could be a user's file or
+		 * session name, so they must never be rewritten there.
+		 */
 		const STATIC = /*__KO_STATIC__*/{};
+		const STATIC_GLOBAL = STATIC.global ?? {};
+		const STATIC_PLUGINS = STATIC.plugins ?? {};
+		const STATIC_LEGACY = STATIC.legacy ?? {};
+		const PLUGIN_SCOPE = "[data-plugin-panel], [data-plugin-scope], [data-plugin-package], [data-plugin-entry]";
+		let legacyStatic = false;
 
 		const DEBUG = /*__DEBUG__*/false;
 		const KO_ID = "ko";
@@ -37,11 +48,17 @@ window.__ModuleLoader__.load({
 		const touched = new Map();
 		const PRUNE_AT = 4000;
 
-		function translateText(value) {
+		/**
+		 * @param value - text node value or attribute value.
+		 * @param el - the element showing it (text node parent, or the attribute's owner).
+		 */
+		function translateText(value, el) {
 			if (!value) return undefined;
 			const trimmed = value.trim();
 			if (!trimmed) return undefined;
-			const hit = STATIC[trimmed];
+			let hit = STATIC_GLOBAL[trimmed];
+			if (hit === undefined && legacyStatic) hit = STATIC_LEGACY[trimmed];
+			if (hit === undefined && STATIC_PLUGINS[trimmed] !== undefined && el.closest(PLUGIN_SCOPE)) hit = STATIC_PLUGINS[trimmed];
 			if (hit === undefined) return undefined;
 			return value.replace(trimmed, hit);
 		}
@@ -61,7 +78,7 @@ window.__ModuleLoader__.load({
 			const parent = node.parentElement;
 			if (!parent || inSkipped(parent)) return;
 			const current = node.nodeValue;
-			const next = translateText(current);
+			const next = translateText(current, parent);
 			if (next === undefined || next === current) return;
 			remember(node, "#text", current, next);
 			node.nodeValue = next;
@@ -69,7 +86,7 @@ window.__ModuleLoader__.load({
 		function patchAttrs(el) {
 			for (const attr of ATTRS) {
 				const current = el.getAttribute(attr);
-				const next = translateText(current);
+				const next = translateText(current, el);
 				if (next === undefined || next === current) continue;
 				remember(el, attr, current, next);
 				el.setAttribute(attr, next);
@@ -158,6 +175,7 @@ window.__ModuleLoader__.load({
 		 * runtime's lookup and snapshot, with the choice kept in browser storage.
 		 */
 		function applyLegacy(ctx, locale) {
+			legacyStatic = true;
 			const originalLookup = locale.lookup;
 			const originalPublish = locale.publish;
 			const originalSetLocale = locale.setLocale;

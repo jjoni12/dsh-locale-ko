@@ -22,4 +22,4 @@ for (const target of process.argv.slice(2)) {
 	cpSync(pkg, join(target, "dsh-plugin-locale-ko"), { recursive: true });
 	console.log("copied to", target);
 }
-console.log("namespaces:", Object.keys(ko).length, "static:", Object.keys(statics).length);
+console.log("namespaces:", Object.keys(ko).length, "static:", Object.fromEntries(Object.entries(statics).map(([g, v]) => [g, Object.keys(v).length])));
