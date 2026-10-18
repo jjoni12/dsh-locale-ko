@@ -2,3 +2,8 @@ node_modules/
 *.bak-*
 .DS_Store
 Thumbs.db
+
+# Local environment files with secrets
+.env
+.env.*
+!.env.example
