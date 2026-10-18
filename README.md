@@ -1,5 +1,7 @@
 # dsh-locale-ko
 
+**한국어** | [English](README.en.md)
+
 **DeepSeek Harness(DSH) 비공식 한국어 언어팩** · 딥시크 하네스 한글 패치
 
 > **Korean (한국어) UI language pack for [DeepSeek Harness](https://www.deepseek.com/en/harness/).**
