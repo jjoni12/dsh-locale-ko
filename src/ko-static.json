@@ -50,6 +50,8 @@
     "Stores automation tasks, runs each in its original session when it is due, and gives the agent tools to manage them.": "자동화 작업을 저장하고, 예정 시각이 되면 원래 세션에서 실행하며, 에이전트에게 작업 관리 도구를 줍니다.",
     "Provide the official powered-by-DSH badge skill.": "공식 powered-by-DSH 배지 스킬을 제공합니다.",
     "Time awareness": "시간 인식",
-    "Tells the model the current time, the browser's time zone, and the time since the previous message at each step.": "단계마다 현재 시각, 브라우저 시간대, 이전 메시지 이후 지난 시간을 모델에 알려 줍니다."
+    "Tells the model the current time, the browser's time zone, and the time since the previous message at each step.": "단계마다 현재 시각, 브라우저 시간대, 이전 메시지 이후 지난 시간을 모델에 알려 줍니다.",
+    "Interface customization": "화면 사용자 지정",
+    "Customize plugin entries in the left sidebar, conversation views, and right sidebar, and quickly create new plugins.": "왼쪽 사이드바, 대화 보기, 오른쪽 사이드바의 플러그인 항목을 사용자 지정하고 새 플러그인을 빠르게 만듭니다."
   }
 }

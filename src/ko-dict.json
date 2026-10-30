@@ -132,7 +132,8 @@
     "session.new.label": "새 세션",
     "toggle.open": "사이드바 열기",
     "toggle.collapse": "사이드바 접기",
-    "panels.label": "전역 패널"
+    "panels.label": "전역 패널",
+    "panels.more": "더 보기"
   },
   "settings.models": {
     "nav": "모델",
@@ -682,7 +683,8 @@
     "terminal.noExitCode": "종료 코드 없음",
     "terminal.commandLine": "명령 {n}행",
     "terminal.sendInput": "(입력 보내기)",
-    "terminal.session": "터미널 {sessionId}"
+    "terminal.session": "터미널 {sessionId}",
+    "session.moreViews": "다른 대화 보기 방식"
   },
   "workflowRun": {
     "run.title": "{name}",
@@ -2062,7 +2064,8 @@
     "dock.drop.top": "위쪽에 나누기",
     "dock.drop.bottom": "아래쪽에 나누기",
     "tab.guide.title": "시작",
-    "tab.unavailable": "아직 이 종류의 내용을 볼 수 있는 기능이 없습니다."
+    "tab.unavailable": "아직 이 종류의 내용을 볼 수 있는 기능이 없습니다.",
+    "tab.guide.more": "도구 더 보기"
   },
   "secretMask": {
     "secret.reveal": "비밀 값 보기",
@@ -2676,5 +2679,12 @@
     "attachmentEnded": "터미널 연결이 끝났습니다. 계속하려면 다시 연결하세요.",
     "invalidOutput": "터미널 화면을 받지 못했습니다. 복구하려면 다시 연결하세요.",
     "terminalLimit": "터미널 수 한도에 도달했습니다. 쓰지 않는 터미널을 닫고 다시 시도하세요. 종료된 터미널도 한도에 포함됩니다."
+  },
+  "entryCustomization": {
+    "install": "다른 플러그인 둘러보기",
+    "create": "나만의 플러그인 만들기",
+    "createPrompt.sidebar": "왼쪽 사이드바 항목이 있는 DSH 플러그인을 만들어 줘.",
+    "createPrompt.conversation": "DSH 대화 보기 플러그인을 만들어 줘.",
+    "createPrompt.rightbar": "오른쪽 사이드바 항목이 있는 DSH 플러그인을 만들어 줘."
   }
 }
