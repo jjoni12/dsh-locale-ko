@@ -30,8 +30,8 @@ This is an unofficial community translation and is not made, affiliated with or 
 
 | App | Version |
 |---|---|
-| [DeepSeek Harness official desktop app](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.2-rc.1 |
-| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.2-rc.1 |
+| [DeepSeek Harness official desktop app](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.2-rc.2 |
+| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.2-rc.2 |
 
 On other versions some text may stay in English or the pack may not work.
 
@@ -67,7 +67,7 @@ Installing, turning off and removing are all handled by the **Plugins page** of 
 | `lib/client.js` | The built language pack |
 | `locale/*.json` | Name and description shown on the Plugins page (English, Chinese, Korean) |
 | `icon.svg` | Plugin icon |
-| `src/ko-dict.json` | Korean translations of strings registered in the app's i18n system (68 namespaces, 3,590 keys as of 0.2.2-rc.1) |
+| `src/ko-dict.json` | Korean translations of strings registered in the app's i18n system (73 namespaces, 4,109 keys as of 0.2.2-rc.2) |
 | `src/ko-static.json` | Korean translations of strings that bypass the i18n system, in two groups: `global` (anywhere) and `plugins` (only inside the Plugins page) |
 | `src/client.template.js`, `src/build.mjs` | Template and build script that produce `lib/client.js` from the files above |
 

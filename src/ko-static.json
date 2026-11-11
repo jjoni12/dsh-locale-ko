@@ -123,6 +123,20 @@
     "macOS Computer Use provider": "macOS 컴퓨터 사용 제공자",
     "Provide native macOS applications and windows for the shared Computer Use service.": "공유 컴퓨터 사용 서비스에 macOS 네이티브 앱과 창을 제공합니다.",
     "LiveShare Session Sharing": "LiveShare 세션 공유",
-    "Share the current Session with a colleague, who can drive it in a browser, edit files inside the granted workspace when the share allows writes, or branch their own Session from the completed history.": "현재 세션을 동료와 공유합니다. 동료는 브라우저에서 세션에 작업을 시키고, 공유가 쓰기를 허용하면 허용된 워크스페이스 안의 파일을 편집하고, 완료된 기록에서 자기 세션을 분기할 수 있습니다."
+    "Share the current Session with a colleague, who can drive it in a browser, edit files inside the granted workspace when the share allows writes, or branch their own Session from the completed history.": "현재 세션을 동료와 공유합니다. 동료는 브라우저에서 세션에 작업을 시키고, 공유가 쓰기를 허용하면 허용된 워크스페이스 안의 파일을 편집하고, 완료된 기록에서 자기 세션을 분기할 수 있습니다.",
+    "Gives the agent terminals that open as sidebar tabs you can watch and take over by typing in them. Processes keep running between tool calls, so it can start a dev server or REPL and come back later to read output; it can also read terminals you open yourself.": "에이전트에게 사이드바 탭으로 열리는 터미널을 제공합니다. 사용자가 지켜보다가 직접 입력해 제어권을 넘겨받을 수 있습니다. 도구 호출 사이에도 프로세스가 계속 실행되므로 개발 서버나 REPL을 시작해 두고 나중에 돌아와 출력을 읽을 수 있으며, 사용자가 직접 연 터미널도 읽을 수 있습니다.",
+    "Sidebar terminal backend": "사이드바 터미널 백엔드",
+    "Run the agent's persistent terminals as sidebar tabs the user can watch and take over, and let the agent read the user's own terminals.": "에이전트의 지속 터미널을 사용자가 지켜보고 제어권을 넘겨받을 수 있는 사이드바 탭으로 실행하고, 에이전트가 사용자의 터미널을 읽을 수 있게 합니다.",
+    "Show the proposal card after an answer with location choice, creation progress, undo and restore.": "답변 뒤에 제안 카드를 보여 주며, 위치 선택, 만들기 진행 상황, 실행 취소와 복원을 제공합니다.",
+    "Task board": "작업 보드",
+    "View shared tasks for the subagent tree.": "서브에이전트 트리의 공유 작업을 봅니다.",
+    "Manage the shared task board for a subagent tree.": "서브에이전트 트리의 공유 작업 보드를 관리합니다.",
+    "Give agents tools to manage their shared task board.": "에이전트가 공유 작업 보드를 관리할 수 있는 도구를 제공합니다.",
+    "Office kit": "Office 키트",
+    "Renders, converts, and recalculates Word, Excel, and PowerPoint documents for previews and the Office tools.": "미리보기와 Office 도구를 위해 Word, Excel, PowerPoint 문서를 렌더링하고, 변환하고, 다시 계산합니다.",
+    "Office tools": "Office 도구",
+    "Lets the agent view document pages as images, convert documents to other formats, and recalculate spreadsheets.": "에이전트가 문서 페이지를 이미지로 보고, 문서를 다른 형식으로 변환하고, 스프레드시트를 다시 계산할 수 있게 합니다.",
+    "MCP server manager": "MCP 서버 관리자",
+    "Manage the MCP servers configured in Settings or registered by plugins, and report their connection status.": "설정에서 구성했거나 플러그인이 등록한 MCP 서버를 관리하고 연결 상태를 알려 줍니다."
   }
 }
