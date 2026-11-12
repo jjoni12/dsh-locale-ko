@@ -20,7 +20,6 @@ window.__ModuleLoader__.load({
 		const DEBUG = /*__DEBUG__*/false;
 		const KO_ID = "ko";
 
-		// ── hardcoded-text fallback ───────────────────────────────────────────
 		const ATTRS = ["placeholder", "title", "aria-label"];
 		// Never rewrite conversation content: rendered markdown, user bubbles, reasoning, code, editors.
 		const SKIP = "pre, code, textarea, [contenteditable]:not([contenteditable='false']), .md-code-block, [class*='_markdown_'], [class*='_bubble'], [class*='_thinkBody'], [class*='_fieldValue'], [class*='_filePath']";
@@ -30,10 +29,6 @@ window.__ModuleLoader__.load({
 		const touched = new Map();
 		const PRUNE_AT = 4000;
 
-		/**
-		 * @param value - text node value or attribute value.
-		 * @param el - the element showing it (text node parent, or the attribute's owner).
-		 */
 		function translateText(value, el) {
 			if (!value) return undefined;
 			const trimmed = value.trim();
@@ -118,7 +113,6 @@ window.__ModuleLoader__.load({
 			restoreAll();
 		}
 
-		// ── locale registry integration ───────────────────────────────────────
 		const inject = ["locale"];
 
 		/**
