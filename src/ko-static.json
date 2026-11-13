@@ -137,6 +137,8 @@
     "Office tools": "Office 도구",
     "Lets the agent view document pages as images, convert documents to other formats, and recalculate spreadsheets.": "에이전트가 문서 페이지를 이미지로 보고, 문서를 다른 형식으로 변환하고, 스프레드시트를 다시 계산할 수 있게 합니다.",
     "MCP server manager": "MCP 서버 관리자",
-    "Manage the MCP servers configured in Settings or registered by plugins, and report their connection status.": "설정에서 구성했거나 플러그인이 등록한 MCP 서버를 관리하고 연결 상태를 알려 줍니다."
+    "Manage the MCP servers configured in Settings or registered by plugins, and report their connection status.": "설정에서 구성했거나 플러그인이 등록한 MCP 서버를 관리하고 연결 상태를 알려 줍니다.",
+    "DeepSeek chat import": "DeepSeek 대화 가져오기",
+    "Upload a chat export ZIP from the DeepSeek website with the button next to New session; each conversation becomes a session in the workspace you choose.": "새 세션 옆의 버튼으로 DeepSeek 웹사이트에서 내보낸 대화 ZIP 파일을 업로드합니다. 각 대화는 선택한 워크스페이스의 세션이 됩니다."
   }
 }
