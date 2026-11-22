@@ -30,8 +30,8 @@ This is an unofficial community translation and is not made, affiliated with or 
 
 | App | Version |
 |---|---|
-| [DeepSeek Harness official desktop app](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.2-rc.5 |
-| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.2-rc.5 |
+| [DeepSeek Harness official desktop app](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.3-alpha.1 |
+| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.3-alpha.1 |
 
 On other versions some text may stay in English or the pack may not work.
 
@@ -67,7 +67,7 @@ Installing, turning off and removing are all handled by the **Plugins page** of 
 | `lib/client.js` | The built language pack |
 | `locale/*.json` | Name and description shown on the Plugins page (English, Chinese, Korean) |
 | `icon.svg` | Plugin icon |
-| `src/ko-dict.json` | Korean translations of strings registered in the app's i18n system (74 namespaces, 4,141 keys as of 0.2.2-rc.5) |
+| `src/ko-dict.json` | Korean translations of strings registered in the app's i18n system (83 namespaces, 4,876 keys as of 0.2.3-alpha.1) |
 | `src/ko-static.json` | Korean translations of strings that bypass the i18n system, in two groups: `global` (anywhere) and `plugins` (only inside the Plugins page) |
 | `src/client.template.js`, `src/build.mjs` | Template and build script that produce `lib/client.js` from the files above |
 
@@ -92,7 +92,7 @@ Please report mistranslations or missing strings through an Issue or Pull Reques
 ## Limitations
 
 - Screens built into the app shell itself cannot be translated. This includes the official desktop app's window menu (Application, Edit, etc.).
-- Package descriptions in Settings → Built-in plugins are developer-facing descriptions of each package; they stay in English even in the official Chinese UI, and this pack does not translate them either.
+- Package descriptions in Settings → Built-in plugins (0.2.2-rc.5 and earlier) are developer-facing descriptions of each package; they stay in English even in the official Chinese UI, and this pack does not translate them either.
 - Some text from external plugins or the server (tool names, raw error messages, etc.) may remain in English.
 - New strings may appear in English after an app update.
 
