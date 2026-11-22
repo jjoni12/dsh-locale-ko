@@ -30,8 +30,8 @@ This is an unofficial community translation and is not made, affiliated with or 
 
 | App | Version |
 |---|---|
-| [DeepSeek Harness official desktop app](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.3-alpha.1 |
-| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.3-alpha.1 |
+| [DeepSeek Harness official desktop app](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.3-alpha.2 |
+| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.3-alpha.2 |
 
 On other versions some text may stay in English or the pack may not work.
 

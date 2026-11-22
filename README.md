@@ -34,8 +34,8 @@ DeepSeek Harness의 화면(채팅, 사이드바, 설정, 플러그인, 자동화
 
 | 앱 | 버전 |
 |---|---|
-| [DeepSeek Harness 공식 데스크톱 앱](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.3-alpha.1 |
-| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.3-alpha.1 |
+| [DeepSeek Harness 공식 데스크톱 앱](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.3-alpha.2 |
+| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.3-alpha.2 |
 
 다른 버전에서는 일부 문구가 영어로 나오거나 동작하지 않을 수 있습니다.
 
