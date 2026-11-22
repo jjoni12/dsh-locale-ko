@@ -34,8 +34,8 @@ DeepSeek Harness의 화면(채팅, 사이드바, 설정, 플러그인, 자동화
 
 | 앱 | 버전 |
 |---|---|
-| [DeepSeek Harness 공식 데스크톱 앱](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.2-rc.5 |
-| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.2-rc.5 |
+| [DeepSeek Harness 공식 데스크톱 앱](https://www.deepseek.com/en/harness/) (Windows 64-bit) | 0.2.1-rc.2 ~ 0.2.3-alpha.1 |
+| `npx @deepseek-ai/dsh web` (Web UI) | 0.2.1-rc.2 ~ 0.2.3-alpha.1 |
 
 다른 버전에서는 일부 문구가 영어로 나오거나 동작하지 않을 수 있습니다.
 
@@ -71,7 +71,7 @@ Node.js나 터미널은 필요 없습니다.
 | `lib/client.js` | 빌드된 언어팩 본체 |
 | `locale/*.json` | 플러그인 화면에 표시되는 이름과 설명 (영어·중국어·한국어) |
 | `icon.svg` | 플러그인 아이콘 |
-| `src/ko-dict.json` | 앱 번역 시스템에 등록된 문구의 한국어 번역 (0.2.2-rc.5 기준 74개 네임스페이스, 4,141개 키) |
+| `src/ko-dict.json` | 앱 번역 시스템에 등록된 문구의 한국어 번역 (0.2.3-alpha.1 기준 83개 네임스페이스, 4,876개 키) |
 | `src/ko-static.json` | 번역 시스템을 거치지 않는 문구의 한국어 번역. `global`(어디서나), `plugins`(플러그인 화면 안에서만) 두 묶음 |
 | `src/client.template.js`, `src/build.mjs` | 위 파일들로 `lib/client.js`를 만드는 템플릿과 빌드 스크립트 |
 
@@ -96,7 +96,7 @@ node src/build.mjs
 ## 한계
 
 - 앱 자체에 내장된 화면은 번역할 수 없습니다. 공식 데스크톱 앱의 창 메뉴(Application, Edit 등)가 여기에 해당합니다.
-- 설정 → 기본 제공 플러그인 목록의 패키지 설명은 각 패키지의 개발자용 설명이라 공식 중국어판에서도 영어로 나오며, 이 언어팩도 번역하지 않습니다.
+- 설정 → 기본 제공 플러그인 목록(0.2.2-rc.5 이하)의 패키지 설명은 각 패키지의 개발자용 설명이라 공식 중국어판에서도 영어로 나오며, 이 언어팩도 번역하지 않습니다.
 - 외부 플러그인과 서버에서 내려오는 일부 문구(도구 이름, 오류 원문 등)는 영어로 남을 수 있습니다.
 - 앱이 업데이트되면 새 문구가 영어로 나올 수 있습니다.
 
